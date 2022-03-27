@@ -6,9 +6,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src/**/*.tsx",
+    "lint": "eslint src/**/*.tsx --ignore-pattern *.stories.tsx src",
     "lint:fix": "eslint --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "path": "^0.12.7",
@@ -16,6 +18,13 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@storybook/addon-actions": "^6.4.19",
+    "@storybook/addon-essentials": "^6.4.19",
+    "@storybook/addon-interactions": "^6.4.19",
+    "@storybook/addon-links": "^6.4.19",
+    "@storybook/react": "^6.4.19",
+    "@storybook/testing-library": "^0.0.9",
     "@svgr/cli": "^6.2.1",
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.33",
@@ -23,15 +32,19 @@
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "@vitejs/plugin-react": "^1.0.7",
+    "babel-loader": "^8.2.4",
     "eslint": "7",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-storybook": "^0.5.7",
+    "husky": "^7.0.0",
+    "jest-mock": "^27.5.1",
     "prettier": "^2.6.1",
+    "storybook-builder-vite": "^0.1.21",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vite-plugin-eslint": "^1.3.0",
-    "vite-plugin-svgr": "^1.0.1",
-    "husky": "^7.0.0"
+    "vite-plugin-svgr": "^1.0.1"
   }
 }

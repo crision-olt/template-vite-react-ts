@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import eslintPlugin from "vite-plugin-eslint";
 import * as path from "path";
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const svgConfig = require("./plugins/svgr");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
