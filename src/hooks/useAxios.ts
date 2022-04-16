@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-
+import { API_URL } from "@/config";
+axios.defaults.baseURL = API_URL;
 export const useAxios = <T>(url: string, options: AxiosRequestConfig) => {
   const [state, setState] = useState<AxiosResponse<T>>();
   const [error, setError] = useState<AxiosError>();
@@ -31,7 +32,7 @@ export const useAxios = <T>(url: string, options: AxiosRequestConfig) => {
   };
 };
 
-export const useAxiosGet = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosGet = <T>(url: string, options?: AxiosRequestConfig) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "get",
@@ -39,7 +40,7 @@ export const useAxiosGet = <T>(url: string, options: AxiosRequestConfig) => {
 
   return { data, loading, error };
 };
-export const useAxiosPost = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosPost = <T>(url: string, options?: AxiosRequestConfig) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "post",
@@ -48,7 +49,7 @@ export const useAxiosPost = <T>(url: string, options: AxiosRequestConfig) => {
   return { data, loading, error };
 };
 
-export const useAxiosPut = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosPut = <T>(url: string, options?: AxiosRequestConfig) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "put",
@@ -57,7 +58,10 @@ export const useAxiosPut = <T>(url: string, options: AxiosRequestConfig) => {
   return { data, loading, error };
 };
 
-export const useAxiosDelete = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosDelete = <T>(
+  url: string,
+  options?: AxiosRequestConfig,
+) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "delete",
@@ -65,7 +69,7 @@ export const useAxiosDelete = <T>(url: string, options: AxiosRequestConfig) => {
 
   return { data, loading, error };
 };
-export const useAxiosPatch = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosPatch = <T>(url: string, options?: AxiosRequestConfig) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "patch",
@@ -73,7 +77,7 @@ export const useAxiosPatch = <T>(url: string, options: AxiosRequestConfig) => {
 
   return { data, loading, error };
 };
-export const useAxiosHead = <T>(url: string, options: AxiosRequestConfig) => {
+export const useAxiosHead = <T>(url: string, options?: AxiosRequestConfig) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,
     method: "head",
@@ -83,7 +87,7 @@ export const useAxiosHead = <T>(url: string, options: AxiosRequestConfig) => {
 };
 export const useAxiosOptions = <T>(
   url: string,
-  options: AxiosRequestConfig,
+  options?: AxiosRequestConfig,
 ) => {
   const { data, loading, error } = useAxios<T>(url, {
     ...options,

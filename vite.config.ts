@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import eslintPlugin from "vite-plugin-eslint";
 import viteSentry from "vite-plugin-sentry";
-import * as path from "path";
+import { resolve } from "path";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const svgConfig = require("./plugins/svgr");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -10,10 +10,15 @@ const svgPlugin = require("vite-plugin-svgr");
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  root: "./",
+  build: {
+    outDir: "dist",
+  },
+  publicDir: "public",
   resolve: {
     alias: {
-      "@": path.resolve(path.resolve(__dirname), "src"),
-      "@utils": path.resolve(path.resolve(__dirname), "src/utils"),
+      "@": resolve(resolve(__dirname), "src"),
+      "@utils": resolve(resolve(__dirname), "src/utils"),
     },
   },
   plugins: [
@@ -27,7 +32,7 @@ export default defineConfig({
     }),
     viteSentry({
       url: "https://my.ondemand.sentry.com",
-      authToken: "<SECRET_TOKEN_HERE>",
+      authToken: "",
       org: "my_org",
       project: "my_project",
       release: "1.0",
