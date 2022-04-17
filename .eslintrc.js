@@ -32,6 +32,12 @@ module.exports = {
   plugins: [`react`, `@typescript-eslint`, `prettier`],
   ignorePatterns: ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)", "*.svg"],
   rules: {
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: ["@/features/*/*"],
+      },
+    ],
     "react/react-in-jsx-scope": `off`,
     quotes: [`warn`, "double", { allowTemplateLiterals: true }],
     "comma-dangle": [`error`, `always-multiline`],

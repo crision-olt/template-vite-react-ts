@@ -27,6 +27,22 @@ module.exports = {
     },
     {
       type: "add",
+      path: "src/features/{{name}}/assets",
+    },
+    {
+      type: "add",
+      path: "src/features/{{name}}/hooks",
+    },
+    {
+      type: "add",
+      path: "src/features/{{name}}/stores",
+    },
+    {
+      type: "add",
+      path: "src/features/{{name}}/utils",
+    },
+    {
+      type: "add",
       path: "src/features/{{name}}/{{properCase name}}.tsx",
       templateFile: "generators/feature/index.ts.hbs",
     },
