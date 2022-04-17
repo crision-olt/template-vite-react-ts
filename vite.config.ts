@@ -10,11 +10,6 @@ const svgPlugin = require("vite-plugin-svgr");
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  root: "./",
-  build: {
-    outDir: "dist",
-  },
-  publicDir: "public",
   resolve: {
     alias: {
       "@": resolve(resolve(__dirname), "src"),

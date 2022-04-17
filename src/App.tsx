@@ -1,4 +1,5 @@
 import { FC, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 const Loading: FC = () => (
   <div
     className={"w-screen h-screen flex items-center justify-center bg-gray-800"}
@@ -8,12 +9,13 @@ const Loading: FC = () => (
         "inline-block text-gray-800 align-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 hover:p-2 rounded-lg"
       }
     >
-      {"Hello World"}
+      {"Cargando..."}
     </div>
   </div>
 );
 
 const App: FC = () => {
+  const { t } = useTranslation();
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -26,7 +28,7 @@ const App: FC = () => {
             "inline-block text-gray-800 align-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 hover:p-2 rounded-lg"
           }
         >
-          {"Hello World"}
+          {t("hello-world")}
         </div>
       </div>
     </Suspense>

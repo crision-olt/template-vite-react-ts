@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useRef } from "react";
+import { FC, MouseEvent, ReactNode, useEffect, useRef } from "react";
 import { getFocusableElements, nextFocus, usePortal } from "@/utils/portal";
 import { createPortal } from "react-dom";
 
@@ -7,6 +7,7 @@ export type FrameProps = {
   closeOnEsc?: boolean;
   onClose: () => void;
   open?: boolean;
+  children: ReactNode;
 };
 export const Frame: FC<FrameProps> = ({
   children,
