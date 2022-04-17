@@ -12,8 +12,7 @@ const svgPlugin = require("vite-plugin-svgr");
 export default defineConfig({
   resolve: {
     alias: {
-      "@": resolve(resolve(__dirname), "src"),
-      "@utils": resolve(resolve(__dirname), "src/utils"),
+      "@": resolve(resolve(__dirname), "src/"),
     },
   },
   plugins: [

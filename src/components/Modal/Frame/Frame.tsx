@@ -1,6 +1,9 @@
-import { FC, MouseEvent, ReactNode, useEffect, useRef } from "react";
-import { getFocusableElements, nextFocus, usePortal } from "@/utils/portal";
+import { FC, ReactNode, RefObject, useCallback } from "react";
+import { getFocusableElements, nextFocus, usePortal } from "@utils/portal";
 import { createPortal } from "react-dom";
+import { useWindowKeyDown } from "@hooks/useWindowKeyDown";
+import { usePortalFocus } from "@hooks/usePortalFocus";
+import { useOutsideClick } from "@hooks/useOutsideClick";
 
 export type FrameProps = {
   closeOnClickOutside?: boolean;
@@ -17,55 +20,22 @@ export const Frame: FC<FrameProps> = ({
   open = true,
 }) => {
   const portal = usePortal();
-  const previousFocus = useRef<HTMLElement | null>(null);
 
   // close on click outside
-  const container = useRef<HTMLDivElement>(null);
-  const onOverlayClick = (e: MouseEvent) => {
-    if (!container.current?.contains(e.target as Node)) onClose();
-  };
+  const container = useOutsideClick(onClose, closeOnClickOutside);
 
   // close on esc
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (!open) return;
+  const onKeyDown = useCallback(
+    onKeyDownPortal(container, closeOnEsc, onClose),
+    [],
+  );
+  useWindowKeyDown(onKeyDown, undefined, closeOnEsc, onClose, open);
 
-      switch (e.key) {
-        case "Escape": {
-          if (closeOnEsc) onClose();
-          break;
-        }
-        case "Tab": {
-          e.preventDefault();
-          nextFocus(getFocusableElements(container.current), !e.shiftKey);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [closeOnEsc, onClose, open]);
-
-  useEffect(() => {
-    // aria-hidden
-    document
-      .getElementById("root")
-      ?.setAttribute("aria-hidden", open.toString());
-    portal.current?.setAttribute("aria-hidden", (!open).toString());
-
-    if (open) {
-      previousFocus.current = (document.activeElement as HTMLElement) ?? null;
-      nextFocus(getFocusableElements(container.current));
-    } else {
-      previousFocus.current?.focus?.();
-      previousFocus.current = null;
-    }
-  }, [open, portal]);
+  //focus on open
+  usePortalFocus(container, open, portal);
 
   return createPortal(
     <div
-      onClick={closeOnClickOutside ? onOverlayClick : undefined}
       className={`fixed inset-0 z-10 p-8 text-white bg-gray-600/90 ${
         open ? "visible" : "invisible"
       }`}
@@ -78,7 +48,7 @@ export const Frame: FC<FrameProps> = ({
         </div>
         {/* closer in the corner */}
         <button
-          onClick={() => onClose()}
+          onClick={onClose}
           title={"Bye bye 👋"}
           type={"button"}
           className={
@@ -92,3 +62,25 @@ export const Frame: FC<FrameProps> = ({
     portal.current,
   );
 };
+
+const onKeyDownPortal =
+  (
+    container: RefObject<HTMLDivElement>,
+    closeOnEsc: boolean,
+    onClose: () => void,
+  ) =>
+  (e: KeyboardEvent) => {
+    if (!open) return;
+
+    switch (e.key) {
+      case "Escape": {
+        if (closeOnEsc) onClose();
+        break;
+      }
+      case "Tab": {
+        e.preventDefault();
+        nextFocus(getFocusableElements(container.current), !e.shiftKey);
+        break;
+      }
+    }
+  };

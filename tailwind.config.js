@@ -6,7 +6,6 @@ module.exports = {
     `./**/*.css`,
     `./**/*.svg`,
     `./index.html`,
-    `./public/index.html`,
   ],
   theme: {
     extend: {},

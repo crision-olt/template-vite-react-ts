@@ -1,9 +1,8 @@
 // hook to detect outside click on a component.
 import { useEffect, useRef } from "react";
 
-export const useOutsideClick = (callback: () => void) => {
+export const useOutsideClick = (callback: () => void, execute: boolean) => {
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -11,7 +10,7 @@ export const useOutsideClick = (callback: () => void) => {
       }
     };
 
-    document.addEventListener("click", handleClick);
+    execute && document.addEventListener("click", handleClick);
 
     return () => {
       document.removeEventListener("click", handleClick);
